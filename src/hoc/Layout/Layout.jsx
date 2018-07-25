@@ -4,6 +4,7 @@ import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 import './Layout.css';
 
+
 class Layout extends Component {
   state = {
     showSideDrawer: false,
@@ -14,7 +15,7 @@ class Layout extends Component {
   }
 
   sideDrawerToggleHandler = () => {
-    this.setState((prevState) => ({ showSideDrawer: !prevState.showSideDrawer }))
+    this.setState(prevState => ({ showSideDrawer: !prevState.showSideDrawer }))
   }
 
   render() {
@@ -28,7 +29,7 @@ class Layout extends Component {
         <main className="Content">
           {this.props.children}
         </main>
-      </Auxiliary >
+      </Auxiliary>
     );
   }
 }
