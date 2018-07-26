@@ -18,7 +18,7 @@ class Orders extends Component {
         for (const key in response.data) {
           fetchOrders.push({
             ...response.data[key],
-            id: key
+            id: key,
           });
         }
 

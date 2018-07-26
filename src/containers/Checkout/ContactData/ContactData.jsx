@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
@@ -30,6 +31,7 @@ class ContactData extends Component {
         value: '',
         validation: {
           required: true,
+          isEmail: true,
         },
         valid: false,
         touched: false,
@@ -70,7 +72,8 @@ class ContactData extends Component {
         validation: {
           required: true,
           minLength: 4,
-          maxLength: 15,
+          maxLength: 10,
+          isNumeric: true,
         },
         valid: false,
         touched: false,
@@ -104,7 +107,7 @@ class ContactData extends Component {
     }
 
     const order = {
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       price: this.props.price,
       orderDetails: formData,
     };
@@ -135,6 +138,16 @@ class ContactData extends Component {
 
     if (rules.maxLength) {
       isValid = value.length <= rules.maxLength && isValid;
+    }
+
+    if (rules.isEmail) {
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      isValid = pattern.test(value) && isValid;
+    }
+
+    if (rules.isNumeric) {
+      const pattern = /^\d+$/;
+      isValid = pattern.test(value) && isValid;
     }
 
     return isValid;
@@ -170,7 +183,7 @@ class ContactData extends Component {
     }
 
     let form = (
-      <form action="#">
+      <form onSubmit={this.orderHandler}>
         {formElementArray.map(formElement => (
           <Input
             key={formElement.id}
@@ -183,7 +196,13 @@ class ContactData extends Component {
             changeEvent={event => this.inputChangedHandler(event, formElement.id)}
           />
         ))}
-        <Button buttonType="Success" disabled={!this.state.isFormValid}>Order</Button>
+        <Button
+          buttonType="Success"
+          type="submit"
+          disabled={!this.state.isFormValid}
+        >
+          Order
+        </Button>
       </form>
     );
 
@@ -200,4 +219,11 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = (state) => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice,
+  };
+};
+
+export default connect(mapStateToProps)(ContactData);
