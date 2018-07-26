@@ -1,15 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
 
 import Layout from '../../hoc/Layout/Layout';
 import BurgerBuilder from '../BurgerBuilder/BurgerBuilder';
 import Checkout from '../Checkout/Checkout';
 import Orders from '../Orders/Orders';
-import reducer from '../../store/reducer';
+import store from '../../store/storeConfig';
 
-const store = createStore(reducer);
 
 const App = () => (
   <Provider store={store}>

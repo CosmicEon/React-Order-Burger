@@ -4,6 +4,8 @@ import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 import axios from '../../../services/axios-orders';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import * as actions from '../../../store/actions';
 import './ContactData.css';
 
 class ContactData extends Component {
@@ -93,12 +95,11 @@ class ContactData extends Component {
       },
     },
     isFormValid: false,
-    loading: false,
+    // loading: false,
   }
 
   orderHandler = (event) => {
     event.preventDefault();
-    this.setState({ loading: true });
 
     const formData = {};
     // eslint-disable-next-line
@@ -112,16 +113,7 @@ class ContactData extends Component {
       orderDetails: formData,
     };
 
-    axios.post('/orders.json', order) // .json is required by firebase
-      .then((response) => {
-        this.setState({ loading: false });
-        this.props.history.push('/');
-        console.log(response);
-      })
-      .catch((error) => {
-        this.setState({ loading: false });
-        console.log(error);
-      });
+    this.props.onPurchaseBurger(order);
   }
 
   // eslint-disable-next-line
@@ -206,7 +198,7 @@ class ContactData extends Component {
       </form>
     );
 
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     }
 
@@ -221,9 +213,16 @@ class ContactData extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    ings: state.ingredients,
-    price: state.totalPrice,
+    ings: state.burgerBuilderReducer.ingredients,
+    price: state.burgerBuilderReducer.totalPrice,
+    loading: state.orderReducer.loading,
   };
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onPurchaseBurger: orderDetails => dispatch(actions.purchaseBurger(orderDetails)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));
