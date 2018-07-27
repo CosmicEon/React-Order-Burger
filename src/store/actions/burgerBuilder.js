@@ -19,19 +19,6 @@ export const ingredientRemoved = (ingName) => {
 };
 
 // eslint-disable-next-line
-export const initIngredients = () => {
-  return (dispatch) => { // dispatch comes from Redux Thunk
-    axios.get('/ingredients.json')
-      .then((response) => {
-        dispatch(setIngredients(response.data));
-      })
-      .catch((error) => {
-        dispatch(fetchIngredientsFailed());
-      });
-  };
-};
-
-// eslint-disable-next-line
 export const fetchIngredientsFailed = (ingName) => {
   return {
     type: actionTypes.FETCH_INGREDIENTS_FAILED,
@@ -42,5 +29,18 @@ const setIngredients = (ingredients) => {
   return {
     type: actionTypes.SET_INGREDIENTS,
     ingredients,
+  };
+};
+
+// eslint-disable-next-line
+export const initIngredients = () => {
+  return (dispatch) => { // dispatch comes from Redux Thunk
+    axios.get('/ingredients.json')
+      .then((response) => {
+        dispatch(setIngredients(response.data));
+      })
+      .catch((error) => {
+        dispatch(fetchIngredientsFailed(error));
+      });
   };
 };

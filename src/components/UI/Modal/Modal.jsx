@@ -12,6 +12,10 @@ class Modal extends Component {
     return false;
   }
 
+  componentWillUpdate() {
+    console.log('[Modal] Will Update');
+  }
+
   render() {
     return (
       <Auxiliary>
@@ -26,8 +30,8 @@ class Modal extends Component {
           {this.props.children}
         </div>
       </Auxiliary>
-    )
+    );
   }
-};
+}
 
 export default Modal;

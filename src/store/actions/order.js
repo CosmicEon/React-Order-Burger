@@ -26,11 +26,11 @@ export const purchaseBurgerStart = () => {
 };
 
 // eslint-disable-next-line
-export const purchaseBurger = (orderDetails) => {
+export const purchaseBurger = (orderDetails, token) => {
   return (dispatch) => { // dispatch comes from Redux Thunk
     dispatch(purchaseBurgerStart());
 
-    axios.post('/orders.json', orderDetails) // .json is required by firebase
+    axios.post(`/orders.json?auth=${token}`, orderDetails) // .json is required by firebase
       .then((response) => {
         console.log(response.data);
         dispatch(purchaseBurgerSuccess(response.data.name, orderDetails));
@@ -73,11 +73,12 @@ const fetchOrdersStart = () => {
 };
 
 // eslint-disable-next-line
-export const fetchOrders = () => {
+export const fetchOrders = (token, userId) => {
   return (dispatch) => { // dispatch comes from Redux Thunk
     dispatch(fetchOrdersStart());
 
-    axios.get('/orders.json') // .json is required by firebase
+    const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
+    axios.get(`/orders.json${queryParams}`) // .json is required by firebase
       .then((response) => {
         const fetchOrdersArray = [];
 

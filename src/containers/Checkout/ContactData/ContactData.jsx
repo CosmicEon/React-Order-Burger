@@ -111,13 +111,14 @@ class ContactData extends Component {
       ingredients: this.props.ings,
       price: this.props.price,
       orderDetails: formData,
+      userId: this.props.userId,
     };
 
-    this.props.onPurchaseBurger(order);
+    this.props.onPurchaseBurger(order, this.props.token);
   }
 
   // eslint-disable-next-line
-  checkValidity(value, rules) {
+  checkValidity = (value, rules) => {
     let isValid = true;
 
     if (rules.required) {
@@ -216,12 +217,14 @@ const mapStateToProps = (state) => {
     ings: state.burgerBuilderReducer.ingredients,
     price: state.burgerBuilderReducer.totalPrice,
     loading: state.orderReducer.loading,
+    token: state.authReducer.token,
+    userId: state.authReducer.userId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onPurchaseBurger: orderDetails => dispatch(actions.purchaseBurger(orderDetails)),
+    onPurchaseBurger: (orderDetails, token) => dispatch(actions.purchaseBurger(orderDetails, token)),
   };
 };
 

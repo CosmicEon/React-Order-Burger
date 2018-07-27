@@ -6,7 +6,6 @@ import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSumm
 
 
 class Checkout extends Component {
-
   checkoutCancelledHandler = () => {
     this.props.history.goBack();
   }
@@ -21,6 +20,7 @@ class Checkout extends Component {
       const purchasedRedirect = this.props.purchased
         ? <Redirect to="/" />
         : null;
+
       summary = (
         <React.Fragment>
           {purchasedRedirect}

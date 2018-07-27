@@ -5,8 +5,13 @@
     "linebreak-style": "off",
     "arrow-body-style": "off",
     "implicit-arrow-linebreak": "off",
+    "max-len": ["error", {
+      "code": 155,
+      "ignoreComments": true,
+      "ignoreRegExpLiterals": true
+    }],
     "react/prop-types": "off",
-    "react/destructuring-assignment": "warn",
+    "react/destructuring-assignment": "off",
     "react/jsx-one-expression-per-line": "off"
   }
 }

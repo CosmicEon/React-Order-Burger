@@ -8,6 +8,6 @@ const logo = (props) => {
       <img src={burgerLogo} alt="Burgers" />
     </div>
   );
-}
+};
 
 export default logo;

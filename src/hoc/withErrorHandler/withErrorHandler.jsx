@@ -9,12 +9,12 @@ const withErrorHandler = (WrappedComponent, axios) => {
     }
 
     componentWillMount() {
-      this.requestInterceptor = axios.interceptors.request.use(request => {
+      this.requestInterceptor = axios.interceptors.request.use((request) => {
         this.setState({ error: null });
         return request;
-      })
+      });
       this.responseInterceptor = axios.interceptors.response.use(response => response, (error) => {
-        this.setState({ error: error })
+        this.setState({ error });
       });
     }
 
@@ -40,7 +40,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
         </Auxiliary>
       );
     }
-  }
+  };
 };
 
 export default withErrorHandler;

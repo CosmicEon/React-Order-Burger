@@ -6,7 +6,7 @@ const controls = [
   { label: 'Salad', type: 'salad' },
   { label: 'Bacon', type: 'bacon' },
   { label: 'Cheese', type: 'cheese' },
-  { label: 'Meat', type: 'meat' }
+  { label: 'Meat', type: 'meat' },
 ];
 
 const burgerControls = (props) => {
@@ -30,7 +30,8 @@ const burgerControls = (props) => {
         disabled={!props.toPurchase}
         onClick={props.completeOrder}
       >
-        Order Now
+        {props.isAuthenticated ? ' Order Now' : 'Sign Up to Order'}
+
       </button>
     </div>
   );
