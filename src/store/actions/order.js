@@ -32,11 +32,9 @@ export const purchaseBurger = (orderDetails, token) => {
 
     axios.post(`/orders.json?auth=${token}`, orderDetails) // .json is required by firebase
       .then((response) => {
-        console.log(response.data);
         dispatch(purchaseBurgerSuccess(response.data.name, orderDetails));
       })
       .catch((error) => {
-        console.log(error);
         dispatch(purchaseBurgerFail(error));
       });
   };
@@ -93,7 +91,6 @@ export const fetchOrders = (token, userId) => {
         dispatch(fetchOrdersSuccess(fetchOrdersArray));
       })
       .catch((error) => {
-        console.log(error);
         dispatch(fetchOrdersFail(error));
       });
   };

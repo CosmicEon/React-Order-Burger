@@ -20,7 +20,7 @@ const sideDrawer = (props) => {
         closeBackdrop={props.closed}
       />
       <div className={attachedClasses.join(' ')}>
-        <div className="LogoWrapper">
+        <div className="LogoWrapper" onClick={props.closed}>
           <Logo />
         </div>
         <nav>

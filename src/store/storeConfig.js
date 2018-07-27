@@ -3,8 +3,10 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 
-// Redux Devtools in Browser
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line
+// Redux DevTools in Browser
+const composeEnhancers = process.env.NODE_ENV === 'development'
+  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose  // eslint-disable-line
+  : null;
 
 const reduxStore = createStore(reducers, composeEnhancers(
   applyMiddleware(thunk),
